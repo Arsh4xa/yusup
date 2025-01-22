@@ -21,7 +21,7 @@ const upload = multer({ dest: "uploads/" });
 const SCOPES = ["https://www.googleapis.com/auth/youtube.upload"];
 
 // Endpoint untuk autentikasi OAuth2
-app.get("/auth", (req, res) => {
+app.get("api/auth", (req, res) => {
   const authUrl = oauth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -30,7 +30,7 @@ app.get("/auth", (req, res) => {
 });
 
 // Endpoint untuk menangani callback OAuth2
-app.get("/oauth2callback", async (req, res) => {
+app.get("api/oauth2callback", async (req, res) => {
   const code = req.query.code;
 
   try {
@@ -44,7 +44,7 @@ app.get("/oauth2callback", async (req, res) => {
 });
 
 // Endpoint untuk upload video
-app.post("/upload", upload.single("video"), async (req, res) => {
+app.post("api/upload", upload.single("video"), async (req, res) => {
   if (!req.file) {
     return res.status(400).send("No video file uploaded.");
   }
